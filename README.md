@@ -110,7 +110,7 @@ capabilities.
   An end-to-end AI system that forecasts energy demand, flags anomalies, and minimizes cost by redistributing flexible loads using linear programming. Built with FastAPI and React, it provides real-time, data-driven decisions through an interactive dashboard. The solution reduces electricity bills without altering total usage.
 </p>
 <p>
-  <a href="  <a href="(https://github.com/Kaviyathamizhan/AI_Energy_Optimizer/blob/main/SURE%20Trust%20project%20document%20report.pdf)" target="_blank"><strong>→ View Full Project Report</strong></a>" target="_blank"><strong>→ View Full Project Report</strong></a>
+  <a href="  <a href="(https://github.com/Kaviyathamizhan/AI_Energy_Optimizer/blob/main/SURE%20Trust%20project%20document%20report.pdf)" target="_blank"><strong>→ View Full Project Report</strong></a>
 </p>
 
 <hr style="height:1px; border-top:1px solid #ccc; width:80%;" />
