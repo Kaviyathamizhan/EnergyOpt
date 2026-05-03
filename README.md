@@ -18,31 +18,31 @@
 
 <h2 style = "color:#333;"> Student Details </h2>
 <div align = "left" style ="margin: 20px; font-size: 16px;">
-    <p><strong>Name:</strong> <!--- Add your name---> </p>
-    <p><strong>Email ID:</strong> <!--- Add your mail id ---> </p>
-    <p><strong>College Name:</strong> <!--- Add your college name---> </p>
-    <p><strong>Branch/Specialization :</strong> <!--- Add your branch name---> </p>
-    <p><strong>College ID:</strong> <!--- Add your college ID---> </p>
+    <p><strong>Name:</strong> Kaviyathamizhan T K </p>
+    <p><strong>Email ID:</strong> kaviyathamizhang36python@gmail.com </p>
+    <p><strong>College Name:</strong> Bharath Institue of Higher Education and Research </p>
+    <p><strong>Branch/Specialization :</strong> CSE specialization in AI </p>
+    <p><strong>College ID:</strong> U22IB019 </p>
 </div>
 
 <hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
 
 <h2 style="color:#333;"> Course Details </h2>
 <div align="left" style="margin: 20px; font-size: 16px;">
-    <p><strong>Course Opted:</strong> <!--- Add your course name---> </p>
-    <p><strong>Instructor Name:</strong> <!--- Add your instructor name---> </p>
+    <p><strong>Course Opted:</strong> Python and Machine Learning Applications </p>
+    <p><strong>Instructor Name:</strong> Bhargavesh Dakka </p>
 </div>
 <div align="left" style="margin: 20px; font-size: 16px;">
-    <p><strong>Duration:</strong> <!--- Durations in months---> </p>
+    <p><strong>Duration:</strong> 6 Months </p>
 
 <hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
 
 <h2 style="color:#333;"> Trainer Details </h2>
 <div align="left" style="margin: 20px; font-size: 16px;">
 
-<p><strong>Trainer Name:</strong> <!–– Add trainer name ––></p>
-<p><strong>Trainer Email ID:</strong> <!–– Add trainer email ––></p>
-<p><strong>Trainer Designation:</strong> <!–– Add designation along with company––></p>
+<p><strong>Trainer Name:</strong> Bhargavesh Dakka </p>
+<p><strong>Trainer Email ID:</strong> bhargaveshdakka@gmail.com </p>
+<p><strong>Trainer Designation:</strong> Decision Scientist - II @ Mu Sigma Inc </p>
 
 <hr style="border: 0; border-top: 1px solid #ccc; width: 80%;" />
 
@@ -72,44 +72,47 @@ problem-solving, teamwork, documentation, and delivering real-world project solu
 <h2 style="color:#333;"> Projects Completed </h2>
 <div align="left" style="margin: 20px; font-size: 16px;">
 
-<p><strong><a href="#project1">Project 1:</a></strong> &lt;!-- Add project title → --&gt;</p>
+<p><strong><a href="#project1">Project 1:</a></strong> &lt;Social Media Sentiment Analysis for Brand Monitoring&gt;</p>
 
-<p><strong><a href="#project2">Project 2:</a></strong> &lt;!-- Add project title → --&gt;</p>
+<p><strong><a href="#project2">Project 2:</a></strong> &lt;Cardiovascular Predictor&gt;</p>
 
-<p><strong><a href="#project3">Project 3:</a></strong> &lt;!-- Add project title → --&gt;</p>
+<p><strong><a href="#project3">Project 3:</a></strong> &lt;AI-Based Energy Consumption Prediction and Optimization System&gt;</p>
 
 <p><em>(You can add more projects as needed)</em></p>
 
 </div>
 
 <!-- Project 1 -->
-<h3 id="project1">Project 1: <!-- Add Project Title --></h3>
+<h3 id="project1">Project 1: Social Media Sentiment Analysis for Brand Monitoring ></h3>
 <p>
-  This project involved designing and developing a basic functional module using the core concepts taught in the course.
-  It focused on understanding requirements, creating structured code, and implementing key features.
+  This project is an AI-powered brand monitoring system that analyzes textual data from news sources to understand public perception. It uses transformer-based NLP models to extract sentiment, emotions, and discussion topics from the data. A hybrid attribution mechanism maps these insights to specific brands and detects comparisons between competitors. The system aggregates results and presents actionable insights through a dashboard for competitive intelligence.
 </p>
 <p>
   <a href="<!-- Add link to full report -->" target="_blank"><strong>→ View Full Project Report</strong></a>
 </p>
 
 <!-- Project 2 -->
-<h3 id="project2">Project 2: <!-- Add Project Title --></h3>
+<h3 id="project2">Project 2: Cardiovascular Predictor </h3>
 <p>
-  This project expanded on intermediate concepts and required integrating multiple components to build a more complete solution.
-  It enhanced understanding of UI/UX design, modular coding, and testing.
+  Machine learning application for cardiovascular disease risk prediction using 
+Random Forest classification. Users input health parameters (age, BP, BMI, 
+cholesterol, lifestyle) to receive instant risk assessment with probability 
+scores. Deployed on Streamlit Cloud with data drift monitoring and retraining 
+capabilities.
 </p>
 <p>
   <a href="<!-- Add link to full report -->" target="_blank"><strong>→ View Full Project Report</strong></a>
 </p>
 
 <!-- Project 3 -->
-<h3 id="project3">Project 3: <!-- Add Project Title --></h3>
+<h3 id="project3">Project 3: AI-Based Energy Consumption Prediction and Optimization System </h3>
 <p>
   The final project showcased the practical application of all concepts learned throughout the course.  
-  It required planning, building, optimizing, and documenting a complete real-world project.
+  It required planning, building, optimizing, and documenting a complete real-world project. 
+  An end-to-end AI system that forecasts energy demand, flags anomalies, and minimizes cost by redistributing flexible loads using linear programming. Built with FastAPI and React, it provides real-time, data-driven decisions through an interactive dashboard. The solution reduces electricity bills without altering total usage.
 </p>
 <p>
-  <a href="<!-- Add link to full report -->" target="_blank"><strong>→ View Full Project Report</strong></a>
+  <a href="  <a href="[<!-- Add link to full report -->](https://github.com/Kaviyathamizhan/AI_Energy_Optimizer/blob/main/SURE%20Trust%20project%20document%20report.pdf)" target="_blank"><strong>→ View Full Project Report</strong></a>" target="_blank"><strong>→ View Full Project Report</strong></a>
 </p>
 
 <hr style="height:1px; border-top:1px solid #ccc; width:80%;" />
@@ -124,45 +127,41 @@ problem-solving, teamwork, documentation, and delivering real-world project solu
 
 ## **Learnings from LST and SST**
 
-<!-- add your experiences over here -->
-> _This is a placeholder. Replace the text below with your personal learning from LST and SST sessions summary._
-LST and SST sessions helped me....
----
+LST and SST sessions helped me develop a strong foundation in essential professional skills. I learned the importance of discipline, structured preparation, and how to approach interviews with clarity and confidence. The sessions improved my communication skills, especially in expressing ideas effectively and professionally.
+
+Additionally, I gained awareness of how AI is shaping the outside world and explored various AI tools that can enhance productivity and problem-solving. Overall, these sessions played a key role in preparing me for real-world professional environments and improving my personal and technical mindset.
 
 ## **Community Services**
 
-<!-- add descreption in your own words -->
+The SureTrust Organization actively encouraged students to engage in community service initiatives such as blood donation, supporting elderly citizens, and participating in tree plantation drives. These activities instilled a sense of social responsibility, empathy, and the importance of contributing positively to society.
 
 During my internship period, I participated in multiple community-oriented activities .....<!-- add descreption in your own words -->
 
 ### **Activities Involved**
-<!-- add the location where you given -->
+[<!-- add the location where you given -->](https://maps.app.goo.gl/RsjQ9s5vqd5Y6SSM9)
 - **Blood Donation** – Donated blood and supported basic assistance tasks during the camp.
   
- <!-- add the location where you have panted -->
+ [<!-- add the location where you have panted -->](https://maps.app.goo.gl/6WRoq1bGJjk8ZTWp7?g_st=ac)
 - **Tree Plantation Drive** – Participated by planting trees and contributing to environmental improvement.
 
-  <!-- add the location where you helped -->
+  [<!-- add the location where you helped -->](https://maps.app.goo.gl/YmjA17pAzb9jAwRb7)
 - **Helping Elder Citizens** – Assisted two elderly individuals with simple daily tasks and provided support where needed. 
 
-<!-- you can write impacts according to your experience in your words-->
+Through initiatives by the SureTrust Organization, I actively participated in blood donation, supporting elderly citizens, and tree plantation drives. Donating blood made me realize the immediate value of saving lives, while interacting with elderly individuals strengthened my empathy and communication skills. Tree plantation activities gave me a sense of responsibility toward the environment.
+
+Overall, these experiences shifted my mindset from passive learning to actively contributing to society, making me more socially aware and responsible.
 
 ### **Impact / Contribution**
 
-- Helped create a supportive environment during the blood donation camp. <!-- add the location where you given -->
+- Helped create a supportive environment during the blood donation camp. [<!-- add the location where you given -->](https://maps.app.goo.gl/RsjQ9s5vqd5Y6SSM9)
 - Actively participated in promoting a greener and cleaner surroundings.
 - Offered personal assistance to elder citizens, strengthening community bonds.
 - Improved skills in communication, coordination, and social responsibility.
 
 ### **Photos**
 
-<!-- add your photos below -->
-<!-- change url below with your image urls (inside  src='')-->
-
-- These are just placeholder (sample) images <!-- remove this line -->
-
 <div align="center">
-<img src="https://media.licdn.com/dms/image/v2/D561FAQEJNBia4UCa5w/feedshare-document-images_800/B56Zm5b6SJJkAg-/1/1759752731458?e=1766016000&v=beta&t=7GABy91-0FNbir386wPdJ-Grr385JzS3tR5LQIw1CWg" alt="Community Service Photo 1" width="30%">
+<img src="[https://media.licdn.com/dms/image/v2/D561FAQEJNBia4UCa5w/feedshare-document-images_800/B56Zm5b6SJJkAg-/1/1759752731458?e=1766016000&v=beta&t=7GABy91-0FNbir386wPdJ-Grr385JzS3tR5LQIw1CWg](https://github.com/Kaviyathamizhan/AI_Energy_Optimizer/blob/main/WhatsApp%20Image%202026-05-03%20at%204.47.48%20PM%20(1).jpeg)" alt="Community Service Photo 1" width="30%">
 <img src="https://media.licdn.com/dms/image/v2/D561FAQEJNBia4UCa5w/feedshare-document-images_800/B56Zm5b6SJJkAg-/2/1759752731458?e=1766016000&v=beta&t=6RfJQWWqlQUPcCvDnQNW7kR6yf7w-wPDsIPxum409ck" alt="Community Service Photo 2" width="30%">
 <img src="https://media.licdn.com/dms/image/v2/D561FAQEJNBia4UCa5w/feedshare-document-images_800/B56Zm5b6SJJkAg-/3/1759752731458?e=1766016000&v=beta&t=yWaunKdRdLUKBLbmM3UjRYYz-_GSCfWEQ3_R7dW0xLM" alt="Community Service Photo 3" width="30%">
 </div>
