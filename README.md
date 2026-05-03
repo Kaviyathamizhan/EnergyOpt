@@ -63,10 +63,8 @@
 
 ## Overall Learning 
 
-> _This is a placeholder. Replace the text below with your personal learning summary._
-During this course, I learned the fundamentals of web development and project design.
-I gained hands-on experience with HTML, CSS, JavaScript and strengthened my skills in 
-problem-solving, teamwork, documentation, and delivering real-world project solutions.
+During this course, I developed a strong foundation in Python-based development and system design. I gained hands-on experience in building backend applications using FastAPI, along with a solid understanding of databases and efficient data handling in Python.
+I also explored machine learning fundamentals and core algorithms, enabling me to approach problems with both analytical and practical perspectives. This course strengthened my ability to design scalable solutions, write efficient code, and apply Python across real-world scenarios.
 
 
 <h2 style="color:#333;"> Projects Completed </h2>
