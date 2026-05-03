@@ -1,0 +1,416 @@
+
+AI ENERGY CONSUMPTION OPTIMIZER
+Updated Implementation Guide
+Google Colab + Local Machine Split Architecture
+
+
+
+Version 2.0 — April 2026  |  Tier 1 Only  |  7 Phases
+
+The Core Split — What Goes Where and Why
+
+This is the single most important thing to understand before you start. Every decision in this guide flows from this split.
+
+
+
+
+One-Time Setup — Do This Before Phase 1
+
+These are infrastructure tasks. Do them once. They affect every phase.
+
+S1.  Google Drive Folder Structure
+
+In your Google Drive, create this exact folder layout. All Colab notebooks will save into these folders.
+
+
+To create folders in Drive: go to drive.google.com → right-click → New Folder. Nest them as shown above.
+
+S2.  Local Folder Structure
+
+On your laptop, create this layout. This is what your FastAPI and React will live in.
+
+
+S3.  Local Python Environment (for FastAPI only)
+
+Open terminal. Navigate into energy-optimizer/
+Run: python -m venv venv
+Activate: Windows → venv\Scripts\activate   Mac/Linux → source venv/bin/activate
+Create requirements_local.txt with ONLY these libraries — these are for FastAPI, not training:
+
+
+Run: pip install -r requirements_local.txt
+This gives you the ability to LOAD and RUN pre-trained models. You are not training anything locally.
+
+S4.  How Every Colab Notebook Must Start
+
+Every single Colab notebook you create must have this as its first cell. Write this once, understand it fully.
+
+
+When Colab asks for permission to access your Drive, click Allow. This only happens the first time per session.
+
+S5.  How to Save Artifacts from Colab to Drive
+
+The pattern below is what every training step ends with. Memorize it.
+
+
+S6.  How to Download Artifacts from Drive to Local
+
+After Colab saves files to Drive, download them to your local machine to serve them from FastAPI.
+
+Open Google Drive in your browser.
+Navigate to MyDrive/energy-optimizer/artifacts/models/
+Right-click each .pkl file → Download → save into local energy-optimizer/artifacts/models/
+Do the same for artifacts/scalers/ and data/splits/
+
+
+
+Where you work: Your local machine only. No Colab yet.
+Exit condition:  Dataset downloaded locally AND uploaded to Google Drive. Folder structures on both local and Drive are complete.
+
+1.1  Download the Dataset (Local)
+
+Option A — UCI Household Power Consumption (Recommended)
+Go to: https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption
+Click Download. You get a .zip file (~20 MB).
+Unzip it. Rename the .txt file to household_power_consumption.csv
+Move it into: local energy-optimizer/data/raw/  (for reference — but this copy is not used by Colab)
+Also upload it to Google Drive: go to drive.google.com → navigate to MyDrive/energy-optimizer/data/raw/ → drag and drop the CSV there.
+
+
+Option B — Smart Meters in London (Kaggle)
+Create a free account at kaggle.com if you do not have one.
+Go to: https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london
+Click Download. Unzip. Use block_0.csv only.
+Upload block_0.csv to Drive: MyDrive/energy-optimizer/data/raw/block_0.csv
+
+1.2  Manual Inspection (Local — Before Any Code)
+
+Open the CSV in Excel or any text editor. Answer these 6 questions. Write the answers in a notepad file.
+☐  What does one row represent? (one minute reading? one half-hour?)
+☐  What are the exact column names?
+☐  What is the first date in the file? What is the last date?
+☐  Are there visible '?' characters or blank cells? (missing values)
+☐  What separator does it use? (semicolon or comma?)
+☐  Roughly how many rows does it have? (Excel shows row count at the bottom)
+
+These answers determine every loading decision you make in Colab Phase 2.
+
+1.3  Phase 1 Exit Checklist
+☐  Dataset downloaded locally AND uploaded to Google Drive data/raw/
+☐  Both Drive and local folder structures created
+☐  6 inspection questions answered and written down
+☐  Local Python environment created with requirements_local.txt installed
+
+
+Where you work: Google Colab entirely. Create a new notebook. Name it 01_eda.ipynb.
+Exit condition:  EDA notebook complete. You can describe daily/weekly cycles, missing value extent, distribution shape, and your top 5 lag candidates from ACF/PACF. Processed CSV does NOT need to be saved yet.
+
+2.1  Colab Notebook Start
+
+Cell 1 — mount Drive and define BASE path (from Setup section S4). Run it. Confirm Drive is mounted.
+Cell 2 — install any missing libraries: pip install prophet statsmodels (scikit-learn, pandas, numpy, matplotlib are pre-installed on Colab).
+
+2.2  Load the Dataset
+
+
+2.3  Resample to Hourly
+
+UCI data is per-minute. You need hourly. Resample Global_active_power using .resample('1H').mean()
+After resampling, check row count: 4 years × 365 days × 24 hours ≈ 35,040 rows.
+If much fewer: your datetime parsing has gaps. If much more: you have duplicate timestamps.
+
+2.4  EDA Plots to Create
+
+
+Below each plot, add a markdown cell. Write 2–3 sentences describing what you see. Be specific: name actual hours, actual magnitudes.
+
+2.5  Missing Value Analysis
+
+Count total missing rows in Global_active_power after resampling.
+Find longest consecutive gap: use a loop that tracks how many consecutive NaNs appear.
+Classify: gaps ≤ 3h (short), 4–24h (medium), > 24h (long). Count how many of each.
+Document: total missing %, longest gap duration, date of longest gap.
+
+2.6  Find and Document 2 Real Anomalies
+
+Zoom into random weeks until you find 2 clear spikes that are 2x–4x above surrounding values. For each:
+☐  Record exact timestamp
+☐  Record the anomalous value and surrounding normal values
+☐  Write your hypothesis (equipment fault? holiday? data error?)
+Save these as a small markdown cell — you will compare them against the Isolation Forest output in Phase 5.
+
+2.7  Phase 2 Exit Checklist
+☐  Drive mounted, dataset loaded from Drive path
+☐  Resampled to hourly, row count verified
+☐  All 8 plots created with written descriptions
+☐  Missing value % documented, longest gap recorded
+☐  Top 5 lags identified from ACF/PACF — written down
+☐  2 real anomalies documented with timestamps and values
+
+
+Where you work: Colab. Create notebook 02_preprocessing.ipynb.
+Exit condition:  Processed CSV, scaler.pkl, and split index files all saved to Google Drive. You download scaler + split dates to local machine.
+
+3.1  Handle Missing Values — Before Any Splitting
+
+Forward-fill gaps of 1–3 consecutive hours.
+Linear interpolation for gaps 4–24 hours.
+Drop rows in gaps longer than 24 hours. Log their date ranges to a text file.
+Verify: df['Global_active_power'].isnull().sum() == 0 after handling.
+Save the gap log to Drive: BASE + '/data/processed/gap_log.txt'
+
+3.2  Temporal Split — Before Feature Engineering
+
+
+Sort by timestamp ascending. Confirm already sorted.
+Calculate total rows after cleaning. Compute: train_end = int(n * 0.70), val_end = int(n * 0.85)
+Set split dates: train = rows 0 to train_end-1, val = train_end to val_end-1, test = val_end to end.
+Record the actual timestamps at boundaries. Save to Drive:
+
+
+Save numpy index arrays: np.save(BASE + '/data/splits/train_idx.npy', train_idx) etc.
+Verify: df.index[train_idx].max() < df.index[val_idx].min()  — must be True.
+
+3.3  Feature Engineering — On Each Split Separately
+
+Separate the DataFrame into df_train, df_val, df_test using the saved indices. All features are computed on each split, using only past data.
+
+Time-Based Features — Safe, No Leakage
+
+Lag Features — Compute on Full Sorted Series, Then Split
+Compute lags on the FULL series (before splitting), then apply the split. This correctly allows val/test rows to look back into the training period for their lag values.
+
+After computing all lags, drop rows where ANY lag is NaN. These are only the first 336 rows of the training set.
+
+Rolling Features — Use shift(1) to Prevent Leakage
+
+
+3.4  Scale Features — Fit on Train Only
+
+Identify scalable columns: all lag and rolling features, the target column. Exclude: sin/cos (already -1 to 1), binary flags.
+Create StandardScaler. Fit ONLY on df_train's scalable columns.
+Transform df_train, df_val, df_test with the SAME fitted scaler.
+Save scaler to Drive immediately:
+
+
+3.5  Save Processed Data to Drive
+
+Save the unscaled feature DataFrame: BASE + '/data/processed/features_full.csv'
+Save each split (scaled): train_scaled.csv, val_scaled.csv, test_scaled.csv
+Save feature column order: BASE + '/data/processed/feature_columns.json'  — list of column names in the exact order used. Critical for API inference.
+
+3.6  Download to Local (After This Phase)
+
+
+3.7  Phase 3 Exit Checklist
+☐  Missing values handled — zero NaNs in target
+☐  Temporal split done — boundary dates saved to Drive as JSON
+☐  All 8 time features, 6 lag features, 5 rolling features created
+☐  Scaler fitted on TRAIN ONLY — saved to Drive
+☐  feature_columns.json saved — column order locked
+☐  Local machine has: scaler.pkl, split_dates.json, feature_columns.json
+
+
+Where you work: Colab. Create notebook 03_model_training.ipynb. Load processed data from Drive at the start.
+Exit condition:  All models trained. Comparison table complete with real numbers. Winner model + quantile models saved to Drive. Downloaded locally.
+
+4.1  Load Processed Data from Drive
+
+
+4.2  Naive Baseline — First Thing You Run
+
+Naive prediction for hour T = actual value at T minus 168 hours (shift(168) on the target series).
+Apply this to validation set. Compute RMSE, MAE, MAPE.
+Write results in a markdown cell: 'Naive Baseline — Val RMSE: X.XX, MAE: X.XX, MAPE: X.X%'
+Every model below must beat this RMSE to be worth using. If any model does not, it fails.
+
+4.3  Walk-Forward CV Setup
+
+Use this for hyperparameter tuning of ALL ML models. Never tune on the test set.
+
+4.4  Models to Train — In This Order
+
+
+4.5  Prediction Intervals — XGBoost / LightGBM
+
+Train two extra models for uncertainty quantification. These run alongside your main model.
+Train XGBoost with objective='reg:quantileerror', quantile_alpha=0.05 → call it model_q05
+Train XGBoost with objective='reg:quantileerror', quantile_alpha=0.95 → call it model_q95
+The prediction interval for any hour T = [model_q05.predict(T), model_q95.predict(T)]
+Check: what fraction of validation y_val falls between q05 and q95 predictions? Should be close to 90%.
+
+4.6  Save All Models to Drive Immediately After Training
+
+Do not wait until all models are done. Save each model immediately after it finishes training.
+
+4.7  Test Set Evaluation — One Shot
+
+
+4.8  Comparison Table — Fill With Real Numbers
+
+4.9  Download Winner Models to Local
+
+
+4.10  Phase 4 Exit Checklist
+☐  Naive baseline computed and written down
+☐  All 6 models trained with walk-forward CV
+☐  Quantile models (q05, q95) trained and saved
+☐  Test set evaluated ONCE — results written in markdown
+☐  Comparison table complete with real numbers
+☐  Winner justified in writing
+☐  All model .pkl files on Drive
+☐  Local machine has: xgb_winner.pkl, xgb_q05.pkl, xgb_q95.pkl
+
+
+Where you work: Colab. Create notebook 04_anomaly.ipynb. Load training data from Drive.
+Exit condition:  Isolation Forest trained, synthetic validation complete with P/R/F1, isolation_forest.pkl saved to Drive and downloaded locally.
+
+5.1  Define the Anomaly Before Writing Any Code
+
+
+5.2  Prepare Features and Train Isolation Forest
+
+Features for the Isolation Forest detector — 6 features only:
+consumption_kwh (the raw value)
+rolling_mean_24h (from Phase 3 processed data)
+rolling_std_24h
+hour_of_day (raw 0–23 integer)
+day_of_week (0–6 integer)
+residual = consumption_kwh minus rolling_mean_24h
+
+Load X_train from Drive (the 6 features above from the training split).
+Fit IsolationForest(contamination=0.05, n_estimators=200, random_state=42) on X_train only.
+Save immediately: joblib.dump(iso_forest, BASE + '/artifacts/models/isolation_forest.pkl')
+
+5.3  Synthetic Injection Validation
+
+Load X_test and y_test from Drive.
+Copy y_test into y_test_modified.
+Randomly pick 30 row indices. Record them as ground_truth_anomaly_indices.
+Multiply consumption values at those 30 indices by a random factor between 1.5 and 3.0.
+Run your combined detector (Condition A + Condition B) on y_test_modified.
+Compute TP, FP, FN, Precision, Recall, F1.
+Target: Precision > 0.80, Recall > 0.70.
+If below target: adjust contamination (increase to catch more) or sigma threshold (3.0 → 2.5 to be more aggressive). Retrain and re-validate.
+Write final parameters and final P/R/F1 in a markdown cell.
+
+5.4  Download to Local
+
+
+5.5  Phase 5 Exit Checklist
+☐  Anomaly definition written explicitly as markdown in notebook
+☐  Isolation Forest trained on training data ONLY
+☐  Saved to Drive immediately after training
+☐  30 synthetic anomalies injected, P/R/F1 computed
+☐  Precision > 0.80 and Recall > 0.70 (or documented why target was adjusted)
+☐  isolation_forest.pkl downloaded to local artifacts/models/
+
+
+Where you work: Start in Colab (notebook 05_optimization.ipynb) to develop and test. The final .py file runs locally inside FastAPI — scipy is lightweight enough for local execution.
+Exit condition:  lp_scheduler.py written, tested on 5 windows, produces valid schedules. File saved to Drive AND copied to local src/optimization/lp_scheduler.py.
+
+6.1  Why LP Runs Locally (Unlike Models)
+
+
+6.2  Tariff Schedule
+
+
+Store this as a Python dictionary in lp_scheduler.py. The API will call it by tariff type name.
+
+6.3  LP Formulation (Develop in Colab, Run Locally)
+
+Objective: minimize sum(tariff[t] × load[t]) for t in range(48)
+Constraint 1 (equality): sum(load[t]) == total_demand — demand must be met
+Constraint 2 (bounds): each load[t] must be within [max(0, forecast[t] - flex_limit), min(capacity, forecast[t] + flex_limit)]
+Where flex_limit = forecast[t] × flexibility_fraction (start with 0.20 = 20%)
+Use scipy.optimize.linprog with method='highs'
+Check result.status == 0 before using the result. Status 2 = infeasible. Handle it gracefully.
+Compute: original_cost = sum(tariff × forecast), optimized_cost = sum(tariff × result.x), savings = original - optimized
+
+6.4  Test in Colab on 5 Real Windows
+
+Pick 5 different 48-hour windows from your test period. For each:
+☐  Run the LP. Confirm result.status == 0
+☐  Confirm optimized_cost <= original_cost
+☐  Confirm sum(optimized_schedule) == total_demand (within floating point tolerance)
+☐  Confirm no load[t] is negative
+☐  Confirm no load[t] exceeds capacity
+☐  Print the savings amount and percentage. Record all 5 results.
+
+6.5  Save and Deploy
+
+Save the final lp_scheduler.py to Drive: BASE + '/src/lp_scheduler.py'
+Copy it to your local machine: local energy-optimizer/src/optimization/lp_scheduler.py
+This is the only Phase 6 file needed locally — no model download required.
+
+6.6  Phase 6 Exit Checklist
+☐  LP formulation documented in notebook markdown
+☐  Tariff schedule defined
+☐  Tested on 5 windows — all feasible, all show savings
+☐  lp_scheduler.py saved to Drive and copied to local src/optimization/
+
+
+Where you work: Your local machine only. No Colab needed.
+Prerequisite: These files must be in your local artifacts/ folder before starting this phase:
+
+
+7.1  FastAPI Project Structure
+
+
+7.2  Load Models at Startup — Not Per Request
+
+
+7.3  API Endpoint Definitions
+
+
+7.4  Inference Logic for /predict
+
+This is the most complex endpoint because you must reconstruct features for future timestamps:
+Given start_timestamp and horizon, generate a list of future timestamps (hourly).
+For each future timestamp, compute time-based features (hour_sin, hour_cos etc.) from the timestamp itself — no data needed.
+For lag features: load the last 336 rows of actual historical data from a reference CSV (save your test set locally for this purpose, or keep a recent window file).
+Apply the loaded scaler to transform the feature vector.
+Run model_store['forecast'].predict(feature_vector) → predicted_kwh
+Run model_store['q05'] and model_store['q95'] → lower_bound, upper_bound
+Return the prediction list.
+
+7.5  Test the API Before Building React
+
+Run: uvicorn api.main:app --reload  from the project root.
+Open browser at http://localhost:8000/docs — Swagger UI loads automatically.
+Test /predict: paste a timestamp, set horizon=24, click Execute. Confirm response has the right shape.
+Test /anomaly: paste a list of 10 readings including one obvious spike. Confirm the spike is flagged.
+Test /optimize: paste a small forecast list. Confirm optimized_cost < original_cost.
+Only proceed to React after all 3 endpoints return valid responses in Swagger.
+
+7.6  React Dashboard
+
+Inside frontend/ run: npx create-react-app .
+Install: npm install recharts
+Create three components:
+
+
+7.7  End-to-End Integration Test
+☐  uvicorn server starts without errors
+☐  All 3 Swagger tests pass
+☐  React app starts with npm start
+☐  ForecastChart renders with a visible confidence band (shaded area)
+☐  AnomalyTimeline shows at least 1 anomaly in recent data
+☐  SavingsPanel shows savings > 0
+☐  No CORS errors in browser console
+
+7.8  Phase 7 Exit Checklist
+☐  FastAPI loads all models at startup — confirmed in terminal output
+☐  All 3 endpoints tested in Swagger UI — correct response shapes
+☐  CORS configured for localhost:3000
+☐  React renders all 3 components with live data from API
+☐  End-to-end flow works without manual intervention
+
+Quick Reference — Files, Where They Live, When They Move
+
+
+Colab Session Management — Avoid Losing Work
+
+
+When to Use Colab GPU vs CPU Runtime
+

@@ -1,0 +1,21 @@
+# ARCHITECTURE DEVIATION & FIXES LOG
+
+This document tracks all implemented fixes, improvements, and architectural deviations from the original project blueprint. Any changes made to bypass flaws in the initial design must be appended here.
+
+---
+### Date: 2026-04-15
+**Phase:** One-Time Setup (Foundation)
+**Component(s) Affected:** Local FastAPI Inference & Artifact Storage
+
+**1. Recent History Buffer (Feature Consistency Fix)**
+- **Original Architecture Limit:** The API was originally designed to reconstruct lag and rolling features by redundantly pulling from a static CSV file on each prediction, leaving it vulnerable to going completely out-of-date and failing on real-time continuous deployment.
+- **Implemented Fix:** Redesigned the FastAPI logic to construct an explicitly defined rolling in-memory buffer (tracking the last 168 hours). The API only uses a static CSV to bootstrap memory at startup, and then dynamically slides its internal buffer forward as new predictions/inputs arrive.
+
+**2. Anomaly Context Handling (Data Flow Fix)**
+- **Original Architecture Limit:** Anomaly detection relies on a 24-hour mean/standard deviation, meaning an endpoint simply built to take `1` reading would have failed, or required the client to pass 24 readings with every HTTP POST.
+- **Implemented Fix:** Programmed the FastAPI anomaly endpoint to maintain a persistent 24-hour internal rolling window cache. It securely accepts strict single/small batch updates without needing the user to resend their entire history.
+
+**3. Artifact Version Constraints (Model Mismatch Fix)**
+- **Original Architecture Limit:** Specified outputting pieces separately (`artifacts/models/xgb.pkl` and `artifacts/scalers/scaler.pkl`), creating a dangerous opportunity for a developer to sync the model but forget the scaler, silently ruining inference metrics.
+- **First Iteration Fix:** Implemented a strict Path-Based `artifacts/v1` tree.
+- **Final Implemented Fix (Metadata Simulation):** Dropped the Path-based strictness for a more enterprise-like manifest registry. Artifacts are restored to `artifacts/models` and `artifacts/scalers`, but are explicitly bound at startup via an `artifacts/metadata.json` manifest. This prevents version-desync while allowing high-speed hyperparameter updates without duplicating files.

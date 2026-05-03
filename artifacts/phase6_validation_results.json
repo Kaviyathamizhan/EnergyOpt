@@ -1,0 +1,72 @@
+{
+  "phase": 6,
+  "windows_tested": 5,
+  "capacity_used": 7.033541666666667,
+  "results": [
+    {
+      "window_start": "2010-11-18 14:00:00",
+      "window_end": "2010-11-20 13:00:00",
+      "solver_ok": true,
+      "optimized_cost_leq_original": true,
+      "demand_conserved": true,
+      "all_non_negative": true,
+      "within_capacity": true,
+      "original_cost": 312.0591,
+      "optimized_cost": 288.0917,
+      "savings": 23.9675,
+      "savings_pct": 7.68
+    },
+    {
+      "window_start": "2010-11-19 20:00:00",
+      "window_end": "2010-11-21 19:00:00",
+      "solver_ok": true,
+      "optimized_cost_leq_original": true,
+      "demand_conserved": true,
+      "all_non_negative": true,
+      "within_capacity": true,
+      "original_cost": 284.6089,
+      "optimized_cost": 265.6145,
+      "savings": 18.9944,
+      "savings_pct": 6.67
+    },
+    {
+      "window_start": "2010-11-21 02:00:00",
+      "window_end": "2010-11-23 01:00:00",
+      "solver_ok": true,
+      "optimized_cost_leq_original": true,
+      "demand_conserved": true,
+      "all_non_negative": true,
+      "within_capacity": true,
+      "original_cost": 311.5977,
+      "optimized_cost": 295.4065,
+      "savings": 16.1912,
+      "savings_pct": 5.2
+    },
+    {
+      "window_start": "2010-11-22 08:00:00",
+      "window_end": "2010-11-24 07:00:00",
+      "solver_ok": true,
+      "optimized_cost_leq_original": true,
+      "demand_conserved": true,
+      "all_non_negative": true,
+      "within_capacity": true,
+      "original_cost": 312.2569,
+      "optimized_cost": 292.8757,
+      "savings": 19.3812,
+      "savings_pct": 6.21
+    },
+    {
+      "window_start": "2010-11-23 14:00:00",
+      "window_end": "2010-11-25 13:00:00",
+      "solver_ok": true,
+      "optimized_cost_leq_original": true,
+      "demand_conserved": true,
+      "all_non_negative": true,
+      "within_capacity": true,
+      "original_cost": 303.7885,
+      "optimized_cost": 281.1043,
+      "savings": 22.6843,
+      "savings_pct": 7.47
+    }
+  ]
+}
