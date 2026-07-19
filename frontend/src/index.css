@@ -75,11 +75,41 @@ body {
   gap: 2px;
 }
 
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(87, 148, 242, 0.2) 0%, rgba(184, 119, 219, 0.2) 100%);
+  border: 1px solid rgba(87, 148, 242, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  box-shadow: 0 0 16px rgba(87, 148, 242, 0.15);
+  flex-shrink: 0;
+}
+
 .dash-title {
   font-size: 1.35rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title-accent {
+  background: linear-gradient(90deg, #5794f2 0%, #b877db 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }
 
 .dash-subtitle {
@@ -89,6 +119,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-top: 2px;
 }
 
 .header-right {

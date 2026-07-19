@@ -151,13 +151,20 @@ export default function Dashboard() {
       {/* ── Simplified Header ── */}
       <header className="dash-header">
         <div className="header-left">
-          <h1 className="dash-title">AI Energy Consumption Optimizer</h1>
-          <div className="dash-subtitle">
-            <span>Real-time forecasting</span>
-            <span>•</span>
-            <span>Anomaly detection</span>
-            <span>•</span>
-            <span>Cost optimization</span>
+          <div className="brand-lockup">
+            <div className="brand-logo-icon">⚡</div>
+            <div>
+              <h1 className="dash-title">
+                EnergyPilot <span className="title-accent">AI</span>
+              </h1>
+              <div className="dash-subtitle">
+                <span>Predictive Grid Forecasting</span>
+                <span>•</span>
+                <span>Isolation Forest Anomaly Guard</span>
+                <span>•</span>
+                <span>LP Cost Optimization</span>
+              </div>
+            </div>
           </div>
         </div>
         
