@@ -152,17 +152,11 @@ export default function Dashboard() {
       <header className="dash-header">
         <div className="header-left">
           <div className="brand-lockup">
-            <div className="brand-logo-icon">⚡</div>
+            <span className="brand-icon">⚡</span>
             <div>
-              <h1 className="dash-title">
-                EnergyPilot <span className="title-accent">AI</span>
-              </h1>
+              <h1 className="dash-title">EnergyOpt</h1>
               <div className="dash-subtitle">
-                <span>Predictive Grid Forecasting</span>
-                <span>•</span>
-                <span>Isolation Forest Anomaly Guard</span>
-                <span>•</span>
-                <span>LP Cost Optimization</span>
+                AI-Powered Energy Forecasting, Anomaly Detection & Cost Optimization
               </div>
             </div>
           </div>
@@ -171,15 +165,15 @@ export default function Dashboard() {
         <div className="header-right">
           <div className={`badge ${isOnline ? 'badge-green' : 'badge-red'}`}>
             <span className={`badge-dot ${isOnline ? 'badge-dot-green' : 'badge-dot-red'}`} />
-            <span>{isOnline ? 'API online' : 'API unreachable'}</span>
+            <span>{isOnline ? 'API Online' : 'API Unreachable'}</span>
           </div>
           
           <div className="badge">
-            <span>Model: LightGBM</span>
+            <span>LightGBM</span>
           </div>
           
           <div className="badge">
-            <span>RMSE: 0.5035</span>
+            <span>RMSE 0.5035</span>
           </div>
 
           <button 

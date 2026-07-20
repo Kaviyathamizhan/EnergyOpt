@@ -1,9 +1,11 @@
-# EnergyPilot AI — Autonomous Grid & Cost Analytics
+# ⚡ EnergyOpt
+
+> AI-Powered Energy Forecasting, Anomaly Detection & Cost Optimization Platform
 
 ## Problem Statement
 The global demand for residential and commercial electricity is rising, resulting in grid instabilities during peak usage hours and inflated consumer pricing. Traditional systems lack predictive foresight and fail to proactively adapt to non-linear anomalies. 
 
-**EnergyPilot AI** is an end-to-end Machine Learning intelligence platform designed to:
+**EnergyOpt** is an end-to-end Machine Learning intelligence platform designed to:
 1. Predict near-term energy fluctuations with gradient boosting.
 2. Mathematically optimize and shift loads from expensive peak hours to off-peak periods using Linear Programming.
 3. Automatically intercept structural and statistical anomalies before grid destabilization.

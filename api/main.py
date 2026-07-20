@@ -73,8 +73,8 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="EnergyPilot AI API",
-    description="Autonomous Inference engine for time-series forecasting, anomaly interception, and LP cost optimization.",
+    title="EnergyOpt API",
+    description="AI-Powered Energy Forecasting, Anomaly Detection & Cost Optimization Platform",
     version="2.0",
     lifespan=lifespan
 )
