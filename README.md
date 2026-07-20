@@ -3,7 +3,7 @@
 > **AI-Powered Energy Forecasting, Anomaly Detection & Cost Optimization Platform**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](#-live-demo)
-[![GitHub Stars](https://img.shields.io/github/stars/Kaviyathamizhan/AI_Energy_Optimizer?style=for-the-badge&color=007ec6&logo=github)](https://github.com/Kaviyathamizhan/AI_Energy_Optimizer)
+[![GitHub Stars](https://img.shields.io/github/stars/Kaviyathamizhan/EnergyOpt?style=for-the-badge&color=007ec6&logo=github)](https://github.com/Kaviyathamizhan/EnergyOpt)
 [![Python](https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](#--tech-stack)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688?style=for-the-badge&logo=fastapi&logoColor=white)](#--tech-stack)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](#--tech-stack)
@@ -21,7 +21,7 @@ Explore the live production deployment and system architecture:
 | Resource | Link / Call-to-Action |
 | :--- | :--- |
 | **🚀 Live Application** | [View Interactive Dashboard on Vercel](#) *(Add live Vercel URL)* |
-| **💻 GitHub Repository** | [Explore Source Code on GitHub](https://github.com/Kaviyathamizhan/AI_Energy_Optimizer) |
+| **💻 GitHub Repository** | [Explore Source Code on GitHub](https://github.com/Kaviyathamizhan/EnergyOpt) |
 | **🏗 Architecture Diagram** | [View System Architecture](#-system-architecture) |
 | **🎥 Demo Video** | [Watch 2-Minute Walkthrough Video](#) *(Add demo video link)* |
 
@@ -274,8 +274,8 @@ To set up and run the full-stack EnergyOpt application locally:
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/Kaviyathamizhan/AI_Energy_Optimizer.git
-cd AI_Energy_Optimizer
+git clone https://github.com/Kaviyathamizhan/EnergyOpt.git
+cd EnergyOpt
 ```
 
 ### 2. Backend Setup (FastAPI)
