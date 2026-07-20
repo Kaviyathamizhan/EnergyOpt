@@ -20,10 +20,9 @@ Explore the live production deployment and system architecture:
 
 | Resource | Link / Call-to-Action |
 | :--- | :--- |
-| **🚀 Live Application** | [View Interactive Dashboard on Vercel](#) *(Add live Vercel URL)* |
+| **🚀 Live Application** | [View Interactive Dashboard on Vercel](https://energyopt.vercel.app/) |
 | **💻 GitHub Repository** | [Explore Source Code on GitHub](https://github.com/Kaviyathamizhan/EnergyOpt) |
 | **🏗 Architecture Diagram** | [View System Architecture](#-system-architecture) |
-| **🎥 Demo Video** | [Watch 2-Minute Walkthrough Video](#) *(Add demo video link)* |
 
 ---
 
